@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+env:
+  LLVM_VERSION: "22"
+
+jobs:
+  build-test-analyze:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Install LLVM toolchain
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          sudo LLVM_VERSION="${LLVM_VERSION}" ./scripts/bootstrap_ubuntu.sh
+
+      - name: Check formatting
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          ./scripts/check_format.sh
+
+      - name: Configure
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          cmake \
+            -S . \
+            -B build \
+            -G Ninja \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_CXX_COMPILER="clang++-${LLVM_VERSION}" \
+            -DLLVM_DIR="/usr/lib/llvm-${LLVM_VERSION}/lib/cmake/llvm" \
+            -DLLVM_PASS_LAB_WARNINGS_AS_ERRORS=ON
+
+      - name: Build
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          cmake --build build --parallel
+
+      - name: Run LLVM lit and FileCheck tests
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          cmake --build build --target check-llvm-pass-lab
+          ctest --test-dir build --output-on-failure
+
+      - name: Run demonstration
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          BUILD_DIR="${PWD}/build" ./scripts/run_demo.sh
+
+      - name: Compare target assembly
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          BUILD_DIR="${PWD}/build" ./scripts/compare_targets.sh
+
+      - name: Static analysis
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          "run-clang-tidy-${LLVM_VERSION}" \
+            -p build \
+            -header-filter='^.*/(include|lib)/.*'

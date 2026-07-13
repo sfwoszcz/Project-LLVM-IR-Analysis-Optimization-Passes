@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="700" viewBox="0 0 1400 700" role="img" aria-labelledby="title desc">
+  <title id="title">Repository architecture</title>
+  <desc id="desc">Architecture showing LLVM opt loading the plugin, pass registration, analysis and transformation passes, and lit FileCheck verification.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect width="1400" height="700" rx="24" fill="#f8fafc"/>
+  <text x="700" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#0f172a">Repository architecture and test boundary</text>
+
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <rect x="80" y="140" width="260" height="110" rx="16" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+    <text x="210" y="183" font-size="24" font-weight="700" fill="#1e3a8a">opt</text>
+    <text x="210" y="216" font-size="18" fill="#1e40af">loads shared plugin</text>
+
+    <rect x="430" y="115" width="540" height="160" rx="18" fill="#ede9fe" stroke="#7c3aed" stroke-width="4"/>
+    <text x="700" y="155" font-size="25" font-weight="700" fill="#4c1d95">LLVMIRPassLab plugin</text>
+    <rect x="470" y="180" width="205" height="62" rx="10" fill="#ffffff" stroke="#8b5cf6"/>
+    <text x="572" y="217" font-size="18" font-weight="700" fill="#5b21b6">Plugin registration</text>
+    <rect x="725" y="180" width="205" height="62" rx="10" fill="#ffffff" stroke="#8b5cf6"/>
+    <text x="827" y="217" font-size="18" font-weight="700" fill="#5b21b6">Pass pipeline parser</text>
+
+    <rect x="430" y="360" width="245" height="150" rx="16" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+    <text x="552" y="402" font-size="22" font-weight="700" fill="#14532d">Function metrics</text>
+    <text x="552" y="438" font-size="17" fill="#166534">read only</text>
+    <text x="552" y="468" font-size="17" fill="#166534">preserves analyses</text>
+
+    <rect x="725" y="360" width="245" height="150" rx="16" fill="#ffedd5" stroke="#ea580c" stroke-width="3"/>
+    <text x="847" y="402" font-size="22" font-weight="700" fill="#7c2d12">Strength reduction</text>
+    <text x="847" y="438" font-size="17" fill="#9a3412">conservative match</text>
+    <text x="847" y="468" font-size="17" fill="#9a3412">IR mutation</text>
+
+    <rect x="1060" y="140" width="260" height="110" rx="16" fill="#e2e8f0" stroke="#475569" stroke-width="3"/>
+    <text x="1190" y="183" font-size="23" font-weight="700" fill="#0f172a">LLVM IR module</text>
+    <text x="1190" y="216" font-size="18" fill="#334155">input / transformed output</text>
+
+    <rect x="205" y="565" width="990" height="85" rx="16" fill="#ffffff" stroke="#0f766e" stroke-width="3"/>
+    <text x="700" y="600" font-size="22" font-weight="700" fill="#134e4a">Verification layer</text>
+    <text x="700" y="630" font-size="18" fill="#115e59">lit · FileCheck · verify pass · strict warnings · clang-format · clang-tidy · CI</text>
+  </g>
+
+  <g stroke="#475569" stroke-width="4" fill="none" marker-end="url(#arrow)">
+    <path d="M340 195 H415"/>
+    <path d="M970 195 H1045"/>
+    <path d="M610 275 V345"/>
+    <path d="M790 275 V345"/>
+    <path d="M552 510 V550"/>
+    <path d="M847 510 V550"/>
+    <path d="M1190 250 C1190 430 1080 490 1020 565"/>
+  </g>
+</svg>

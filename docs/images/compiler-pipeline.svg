@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="520" viewBox="0 0 1500 520" role="img" aria-labelledby="title desc">
+  <title id="title">Compiler pipeline</title>
+  <desc id="desc">The pipeline from source code through preprocessing, parsing, LLVM IR, optimization, instruction selection, object files, linking, and executables.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect width="1500" height="520" rx="22" fill="#f8fafc"/>
+  <text x="750" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#0f172a">Where the project fits in the compiler pipeline</text>
+
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <g>
+      <rect x="40" y="140" width="155" height="90" rx="14" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+      <text x="117" y="178" font-size="21" font-weight="700" fill="#1e3a8a">Source</text>
+      <text x="117" y="205" font-size="17" fill="#1e40af">C / C++</text>
+    </g>
+    <g>
+      <rect x="235" y="140" width="155" height="90" rx="14" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+      <text x="312" y="178" font-size="21" font-weight="700" fill="#0c4a6e">Frontend</text>
+      <text x="312" y="205" font-size="17" fill="#075985">Clang AST</text>
+    </g>
+    <g>
+      <rect x="430" y="120" width="235" height="130" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="4"/>
+      <text x="547" y="164" font-size="23" font-weight="700" fill="#4c1d95">LLVM IR</text>
+      <text x="547" y="193" font-size="17" fill="#5b21b6">SSA · CFG · typed instructions</text>
+      <text x="547" y="220" font-size="17" font-weight="700" fill="#6d28d9">This repository</text>
+    </g>
+    <g>
+      <rect x="705" y="140" width="175" height="90" rx="14" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+      <text x="792" y="178" font-size="21" font-weight="700" fill="#78350f">Backend</text>
+      <text x="792" y="205" font-size="17" fill="#92400e">machine code</text>
+    </g>
+    <g>
+      <rect x="920" y="140" width="155" height="90" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+      <text x="997" y="178" font-size="21" font-weight="700" fill="#14532d">Object</text>
+      <text x="997" y="205" font-size="17" fill="#166534">ELF / COFF</text>
+    </g>
+    <g>
+      <rect x="1115" y="140" width="155" height="90" rx="14" fill="#ffe4e6" stroke="#e11d48" stroke-width="2"/>
+      <text x="1192" y="178" font-size="21" font-weight="700" fill="#881337">Linker</text>
+      <text x="1192" y="205" font-size="17" fill="#9f1239">LLD / GNU ld</text>
+    </g>
+    <g>
+      <rect x="1310" y="140" width="150" height="90" rx="14" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+      <text x="1385" y="178" font-size="21" font-weight="700" fill="#0f172a">Binary</text>
+      <text x="1385" y="205" font-size="17" fill="#334155">executable</text>
+    </g>
+  </g>
+
+  <g stroke="#334155" stroke-width="4" fill="none" marker-end="url(#arrow)">
+    <path d="M195 185 H220"/>
+    <path d="M390 185 H415"/>
+    <path d="M665 185 H690"/>
+    <path d="M880 185 H905"/>
+    <path d="M1075 185 H1100"/>
+    <path d="M1270 185 H1295"/>
+  </g>
+
+  <g font-family="Arial, sans-serif">
+    <rect x="425" y="320" width="245" height="115" rx="14" fill="#ffffff" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="547" y="353" text-anchor="middle" font-size="20" font-weight="700" fill="#4c1d95">Analysis pass</text>
+    <text x="447" y="384" font-size="17" fill="#334155">• basic blocks</text>
+    <text x="447" y="410" font-size="17" fill="#334155">• instructions and loops</text>
+
+    <rect x="705" y="320" width="315" height="115" rx="14" fill="#ffffff" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="862" y="353" text-anchor="middle" font-size="20" font-weight="700" fill="#4c1d95">Transformation pass</text>
+    <text x="727" y="384" font-size="17" fill="#334155">• match narrowly</text>
+    <text x="727" y="410" font-size="17" fill="#334155">• prove equivalence · verify IR</text>
+
+    <path d="M547 250 V305" stroke="#8b5cf6" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+    <path d="M600 250 C650 285 780 285 820 305" stroke="#8b5cf6" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  </g>
+</svg>

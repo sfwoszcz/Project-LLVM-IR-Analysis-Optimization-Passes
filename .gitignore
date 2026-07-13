@@ -1,0 +1,28 @@
+# Build products
+/build/
+/build-*/
+CMakeUserPresets.json
+compile_commands.json
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Generated LLVM artifacts
+*.bc
+*.o
+*.obj
+*.s
+*.so
+*.dylib
+*.dll
+*.profraw
+*.profdata

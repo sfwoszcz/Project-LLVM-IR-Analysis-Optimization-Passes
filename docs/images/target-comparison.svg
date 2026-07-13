@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="600" viewBox="0 0 1400 600" role="img" aria-labelledby="title desc">
+  <title id="title">Target code generation comparison</title>
+  <desc id="desc">LLVM IR is lowered by llc into x86-64 and AArch64 assembly, then inspected with LLVM binary tools.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect width="1400" height="600" rx="24" fill="#f8fafc"/>
+  <text x="700" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#0f172a">One IR module, two target backends</text>
+
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <rect x="500" y="105" width="400" height="105" rx="16" fill="#ede9fe" stroke="#7c3aed" stroke-width="3"/>
+    <text x="700" y="147" font-size="23" font-weight="700" fill="#4c1d95">Verified LLVM IR</text>
+    <text x="700" y="180" font-size="18" fill="#5b21b6">target-independent representation</text>
+
+    <rect x="170" y="330" width="420" height="155" rx="16" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+    <text x="380" y="374" font-size="24" font-weight="700" fill="#1e3a8a">x86-64 backend</text>
+    <text x="380" y="411" font-size="18" fill="#1e40af">llc -mtriple=x86_64-unknown-linux-gnu</text>
+    <text x="380" y="450" font-family="monospace" font-size="21" fill="#0f172a">leal / shll / addl ...</text>
+
+    <rect x="810" y="330" width="420" height="155" rx="16" fill="#ffe4e6" stroke="#e11d48" stroke-width="3"/>
+    <text x="1020" y="374" font-size="24" font-weight="700" fill="#881337">AArch64 backend</text>
+    <text x="1020" y="411" font-size="18" fill="#9f1239">llc -mtriple=aarch64-unknown-linux-gnu</text>
+    <text x="1020" y="450" font-family="monospace" font-size="21" fill="#0f172a">lsl / add / ret ...</text>
+  </g>
+
+  <g stroke="#475569" stroke-width="5" fill="none" marker-end="url(#arrow)">
+    <path d="M620 210 C520 255 430 265 390 315"/>
+    <path d="M780 210 C880 255 970 265 1010 315"/>
+  </g>
+
+  <text x="700" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#475569">Inspect with llvm-objdump, llvm-readelf, llvm-nm, GDB, or LLDB after object generation</text>
+</svg>
