@@ -24,13 +24,13 @@ namespace llvm_pass_lab {
 namespace {
 
 struct Candidate {
-  BinaryOperator *Multiply = nullptr;
-  Value *VariableOperand = nullptr;
-  ConstantInt *Factor = nullptr;
+  BinaryOperator* Multiply = nullptr;
+  Value* VariableOperand = nullptr;
+  ConstantInt* Factor = nullptr;
 };
 
-Candidate findCandidate(Instruction &Instruction) {
-  auto *Multiply = dyn_cast<BinaryOperator>(&Instruction);
+Candidate findCandidate(Instruction& Instruction) {
+  auto* Multiply = dyn_cast<BinaryOperator>(&Instruction);
   if (Multiply == nullptr || Multiply->getOpcode() != Instruction::Mul)
     return {};
 
@@ -42,8 +42,8 @@ Candidate findCandidate(Instruction &Instruction) {
   if (Multiply->hasNoSignedWrap() || Multiply->hasNoUnsignedWrap())
     return {};
 
-  ConstantInt *Factor = dyn_cast<ConstantInt>(Multiply->getOperand(1));
-  Value *VariableOperand = Multiply->getOperand(0);
+  ConstantInt* Factor = dyn_cast<ConstantInt>(Multiply->getOperand(1));
+  Value* VariableOperand = Multiply->getOperand(0);
 
   if (Factor == nullptr) {
     Factor = dyn_cast<ConstantInt>(Multiply->getOperand(0));
@@ -53,24 +53,24 @@ Candidate findCandidate(Instruction &Instruction) {
   if (Factor == nullptr || isa<ConstantInt>(VariableOperand))
     return {};
 
-  const APInt &FactorValue = Factor->getValue();
+  const APInt& FactorValue = Factor->getValue();
   if (!FactorValue.isPowerOf2() || FactorValue.isOne())
     return {};
 
   return {Multiply, VariableOperand, Factor};
 }
 
-bool replaceCandidate(const Candidate &Match) {
+bool replaceCandidate(const Candidate& Match) {
   if (Match.Multiply == nullptr || Match.VariableOperand == nullptr ||
       Match.Factor == nullptr)
     return false;
 
   const unsigned ShiftAmount = Match.Factor->getValue().logBase2();
-  Constant *ShiftConstant =
+  Constant* ShiftConstant =
       ConstantInt::get(Match.Multiply->getType(), ShiftAmount);
 
-  auto *Shift = BinaryOperator::CreateShl(
-      Match.VariableOperand, ShiftConstant, "", Match.Multiply->getIterator());
+  auto* Shift = BinaryOperator::CreateShl(Match.VariableOperand, ShiftConstant,
+                                          "", Match.Multiply->getIterator());
 
   // Preserve source correlation, but do not blindly copy arbitrary metadata:
   // not every metadata kind attached to `mul` is valid or meaningful on `shl`.
@@ -84,14 +84,15 @@ bool replaceCandidate(const Candidate &Match) {
 
 } // namespace
 
-PreservedAnalyses SafeStrengthReductionPass::run(
-    Function &Function, FunctionAnalysisManager &AnalysisManager) {
+PreservedAnalyses
+SafeStrengthReductionPass::run(Function& Function,
+                               FunctionAnalysisManager& AnalysisManager) {
   (void)AnalysisManager;
 
   bool Changed = false;
 
-  for (BasicBlock &Block : Function) {
-    for (Instruction &Instruction : make_early_inc_range(Block))
+  for (BasicBlock& Block : Function) {
+    for (Instruction& Instruction : make_early_inc_range(Block))
       Changed |= replaceCandidate(findCandidate(Instruction));
   }
 

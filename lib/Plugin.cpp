@@ -29,9 +29,9 @@ PassPluginLibraryInfo getPluginInfo() {
       LLVM_PLUGIN_API_VERSION,
       "LLVMIRPassLab",
       LLVM_VERSION_STRING,
-      [](PassBuilder &Builder) {
+      [](PassBuilder& Builder) {
         Builder.registerPipelineParsingCallback(
-            [](StringRef Name, FunctionPassManager &FunctionPasses,
+            [](StringRef Name, FunctionPassManager& FunctionPasses,
                ArrayRef<PassBuilder::PipelineElement>) {
               if (Name == "function-metrics") {
                 FunctionPasses.addPass(FunctionMetricsPass());
@@ -51,7 +51,6 @@ PassPluginLibraryInfo getPluginInfo() {
 
 } // namespace llvm_pass_lab
 
-extern "C" LLVM_ATTRIBUTE_WEAK PassPluginLibraryInfo
-llvmGetPassPluginInfo() {
+extern "C" LLVM_ATTRIBUTE_WEAK PassPluginLibraryInfo llvmGetPassPluginInfo() {
   return llvm_pass_lab::getPluginInfo();
 }

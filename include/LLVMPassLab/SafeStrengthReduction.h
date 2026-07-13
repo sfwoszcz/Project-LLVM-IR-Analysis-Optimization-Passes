@@ -22,9 +22,8 @@ namespace llvm_pass_lab {
 class SafeStrengthReductionPass
     : public llvm::PassInfoMixin<SafeStrengthReductionPass> {
 public:
-  llvm::PreservedAnalyses
-  run(llvm::Function &Function,
-      llvm::FunctionAnalysisManager &AnalysisManager);
+  llvm::PreservedAnalyses run(llvm::Function& Function,
+                              llvm::FunctionAnalysisManager& AnalysisManager);
 };
 
 } // namespace llvm_pass_lab

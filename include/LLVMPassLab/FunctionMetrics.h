@@ -20,9 +20,8 @@ namespace llvm_pass_lab {
 /// The pass does not mutate LLVM IR and therefore preserves all analyses.
 class FunctionMetricsPass : public llvm::PassInfoMixin<FunctionMetricsPass> {
 public:
-  llvm::PreservedAnalyses
-  run(llvm::Function &Function,
-      llvm::FunctionAnalysisManager &AnalysisManager);
+  llvm::PreservedAnalyses run(llvm::Function& Function,
+                              llvm::FunctionAnalysisManager& AnalysisManager);
 };
 
 } // namespace llvm_pass_lab
