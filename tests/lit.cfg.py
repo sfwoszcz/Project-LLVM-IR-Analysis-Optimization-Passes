@@ -4,7 +4,9 @@ import os
 import shlex
 
 import lit.formats
-from lit.llvm import llvm_config
+import lit.llvm
+
+lit.llvm.initialize(lit_config, config)
 
 config.name = "LLVM-IR-Pass-Lab"
 config.test_format = lit.formats.ShTest(execute_external=True)
@@ -20,8 +22,8 @@ if not plugin_path:
 if not os.path.isfile(plugin_path):
     lit_config.fatal(f"pass plugin does not exist: {plugin_path}")
 
-llvm_config.with_environment("PATH", config.llvm_tools_dir, append_path=True)
-llvm_config.add_tool_substitutions(
+lit.llvm.llvm_config.with_environment("PATH", config.llvm_tools_dir, append_path=True)
+lit.llvm.llvm_config.add_tool_substitutions(
     ["FileCheck", "not", "opt"],
     [config.llvm_tools_dir],
 )
