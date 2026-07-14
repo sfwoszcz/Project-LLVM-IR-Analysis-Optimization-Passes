@@ -616,17 +616,6 @@ Repository naming, topic suggestions, first-push commands, and recommended
 security settings are documented in
 [docs/PUBLISHING.md](docs/PUBLISHING.md).
 
-## CV-ready description
-
-After building, testing, and understanding the project, a defensible CV entry is:
-
-> **LLVM IR Analysis and Optimization Pass Lab — C++17, LLVM, Clang, CMake**
->
-> Developed an out-of-tree LLVM new-pass-manager plugin with a deterministic function-analysis pass and a conservative integer strength-reduction transformation.
-> Added LLVM-style regression tests using lit and FileCheck, verified transformed IR, and compared x86-64 and AArch64 code generation with `opt` and `llc`.
-> Applied strict warnings, clang-format, clang-tidy, Docker, CI, defensive shell scripting, and documented semantic-correctness constraints.
-
-Do not claim upstream LLVM contributions until a patch has actually been submitted and accepted.
 
 ## References
 
